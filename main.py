@@ -7,7 +7,7 @@ app = FastAPI()
 @app.get("/")
 def root():
     print("Resquest Sucessfuk")
-    return 0
+    return 200
 
 
 @app.post("/compress")
