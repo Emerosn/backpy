@@ -16,24 +16,36 @@ def root():
 @app.get("/listfiles/")
 def get_list(path: str):
     try:
-        output = subprocess.check_output(["ls","-a",path]).decode("utf-8") 
-        print(output.splitlines())
+        output = subprocess.run(
+                [
+                    "ls",
+                    "-a",
+                    path
+                ],
+                    check=True,
+                    capture_output=True
+                ).decode("utf-8") 
+
+        return {output.splitlines()}
+
     except Exception as e:
-        print(e)
-    return {"files":output.splitlines()}
+    
+        return e
 
 
 # Compress  on format gz file 
 @app.post("/compress/")
 def compress_file(path: str):
     try:
+    
         with open(path,'rb') as list_files:
             with gzip.open(path+'.gz','wb') as list_comprimido:
                 list_comprimido.write(list_files.read())
+        output=path+".gz"
+        return output
+
     except Exception  as e:
-        print(e)
-    return path + ".gz"
+        
+        return e
 
-
-# Send backup for one local directory or remote directory
 
