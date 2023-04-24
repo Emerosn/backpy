@@ -43,8 +43,7 @@ def compress_file(file_path: str):
 
 # send files with destination being they remote or local
 @app.post("/send/")
-def send_file(source_path:
-              str,destination_path:str, use_password:bool, use_rsa: bool=False, pass_rsa:str="", password:str = "", port:str = "22"):
+def send_file(source_path: str,destination_path:str, use_password:bool, use_rsa: bool=False, pass_rsa:str="", password:str = "", port:str = "22"):
     try:
         if use_password:
             if use_rsa:
