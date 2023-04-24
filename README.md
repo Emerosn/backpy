@@ -35,7 +35,7 @@ Sends the file or directory specified by source_path to the destination specifie
 To use this API, you'll need to have Python 3.7 or higher installed on your system. You may also need to install the FastAPI and gzip libraries using the following command:
 
 ```
-pip install fastapi gzip
+pip install -r requires.txt
 ```
 
 Usage
