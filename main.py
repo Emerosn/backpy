@@ -36,10 +36,18 @@ def compress_file(t,path: str):
 
 
 @app.post("/send/")
-def send_file(path_in: str,path_out: str):
+def send_file(pathin: str,pathout: str):
     try:
-        output = subprocess.check_output(["rsync","-avuz",pathin,pathout]).decode("utf-8")
-        return output
+        output =subprocess.Popen(
+                [
+                    "rsync",
+                    "-avz",
+                    pathin,
+                    pathout
+                    ],
+                stdout=subprocess.PIPE
+                )
+        return output.communicate()[0]
     except Exception as e:
         return e
 
