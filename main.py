@@ -55,8 +55,8 @@ def send_file(source_path: str,destination_path:str, use_password:bool, use_rsa:
                             "ssh",
                             "-o",
                             "StrictHostKeyChecking=no",
-                            "-i",
-                            pass_rsa,
+                            "-I",
+                            "{"+pass_rsa+"}",
                             "-p",
                             port,source_path,destination_path
                             ],
