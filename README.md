@@ -1,58 +1,58 @@
 # API de Compressão de Arquivos
 
-Esta é uma API simples construída em Python com a biblioteca FastAPI para compressão de arquivos usando o algoritmo gzip.
-## EndPoints
-```
-GET "/listfiles/"
-Parâmetros:
-- path (str): o caminho para o diretório a ser listado.
+This is a simple API built in Python with the FastAPI library for file compression using the gzip algorithm.
+Endpoints
 
-Retorna uma lista dos nomes dos arquivos e diretórios no diretório especificado por `path`. Se ocorrer um erro, uma string contendo a mensagem de erro será retornada.
-```
-```
-POST "/compress/"
-Parâmetros:
-- file_path (str): o caminho completo para o arquivo que será comprimido.
+    GET "/listfiles/"
 
-Comprime o arquivo especificado por `file_path` usando o formato gzip e retorna o caminho completo para o arquivo comprimido. Se ocorrer um erro, uma string contendo a mensagem de erro será retornada.
-```
-```
-POST "/send/"
-Parâmetros:
-- source_path (str): o caminho completo para o arquivo ou diretório que será enviado.
-- destination_path (str): o caminho completo para o destino do envio.
-- use_password (bool): indica se deve ser usada uma senha para autenticação no destino. Se for True, deve-se fornecer o parâmetro `password`.
-- password (str, opcional): a senha para autenticação no destino. Requer `use_password=True`.
+    Parameters:
 
-Envia o arquivo ou diretório especificado por `source_path` para o destino especificado por `destination_path`. Se `use_password` for True, o parâmetro `password` deve ser fornecido e uma senha temporária será criada em disco para uso no processo de envio. Retorna a saída do processo de envio. Se ocorrer um erro, uma string contendo a mensagem de erro será retornada.
-```
+        path (str): the path to the directory to be listed.
 
-## Instalação
+    Returns a list of file and directory names in the directory specified by path. If an error occurs, a string containing the error message will be returned.
 
-Para usar esta API, você precisará ter o Python 3.7 ou superior instalado em seu sistema. Você também pode precisar instalar a biblioteca FastAPI e o gzip, usando o seguinte comando:
+    POST "/compress/"
+
+    Parameters:
+
+        file_path (str): the full path to the file to be compressed.
+
+    Compresses the file specified by file_path using the gzip format and returns the full path to the compressed file. If an error occurs, a string containing the error message will be returned.
+
+    POST "/send/"
+
+    Parameters:
+
+        source_path (str): the full path to the file or directory to be sent.
+        destination_path (str): the full path to the destination of the send.
+        use_password (bool): indicates whether a password should be used for authentication at the destination. If True, the password parameter must be provided.
+        password (str, optional): the password for authentication at the destination. Requires use_password=True.
+
+    Sends the file or directory specified by source_path to the destination specified by destination_path. If use_password is True, the password parameter must be provided, and a temporary password file will be created on disk for use in the send process. Returns the output of the send process. If an error occurs, a string containing the error message will be returned.
+
+# Installation
+
+To use this API, you'll need to have Python 3.7 or higher installed on your system. You may also need to install the FastAPI and gzip libraries using the following command:
 
 ```
 pip install fastapi gzip
 ```
-Uso
 
-Para iniciar a API, execute o seguinte comando em um terminal:
+Usage
 
+To start the API, run the following command in a terminal:
 
 ```
 uvicorn main:app --reload
 ```
-Isso iniciará o servidor e a API estará pronta para ser usada.
-Compressão de arquivo
 
-Para comprimir um arquivo, faça uma solicitação HTTP POST para a rota /compress, passando o caminho do arquivo como parâmetro no corpo da solicitação. Por exemplo:
+This will start the server, and the API will be ready to use.
+Compressing a File
+
+To compress a file, make an HTTP POST request to the /compress route, passing the file path as a parameter in the request body. For example:
 
 ```
-curl -X POST -d '{"path": "/caminho/do/arquivo.txt"}' http://localhost:8000/compress
+curl -X POST -d '{"path": "/path/to/file.txt"}' http://localhost:8000/compress
 ```
-Isso comprimirá o arquivo /caminho/do/arquivo.txt usando gzip e retornará o caminho do arquivo comprimido (/caminho/do/arquivo.txt.gz).
-Teste da raiz
 
-Para testar a raiz da API, faça uma solicitação HTTP GET para a rota /. Isso imprimirá a mensagem "Request Successful" no console e retornará o código de status 200.
-
-#### Este projeto está sob a licença MIT. Leia o arquivo LICENSE para obter mais informações.
+This will compress the file /path/to/file.txt using gzip and return the path to the compressed file (/path/to/file.txt.gz).
