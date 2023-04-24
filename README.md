@@ -1,6 +1,31 @@
 # API de Compressão de Arquivos
 
 Esta é uma API simples construída em Python com a biblioteca FastAPI para compressão de arquivos usando o algoritmo gzip.
+## Variaveis
+
+<p>GET "/listfiles/"
+Parâmetros:
+- path (str): o caminho para o diretório a ser listado.
+
+Retorna uma lista dos nomes dos arquivos e diretórios no diretório especificado por `path`. Se ocorrer um erro, uma string contendo a mensagem de erro será retornada.
+<p/>
+<p>
+POST "/compress/"
+Parâmetros:
+- file_path (str): o caminho completo para o arquivo que será comprimido.
+
+Comprime o arquivo especificado por `file_path` usando o formato gzip e retorna o caminho completo para o arquivo comprimido. Se ocorrer um erro, uma string contendo a mensagem de erro será retornada.
+<p/>
+<p>
+POST "/send/"
+Parâmetros:
+- source_path (str): o caminho completo para o arquivo ou diretório que será enviado.
+- destination_path (str): o caminho completo para o destino do envio.
+- use_password (bool): indica se deve ser usada uma senha para autenticação no destino. Se for True, deve-se fornecer o parâmetro `password`.
+- password (str, opcional): a senha para autenticação no destino. Requer `use_password=True`.
+
+Envia o arquivo ou diretório especificado por `source_path` para o destino especificado por `destination_path`. Se `use_password` for True, o parâmetro `password` deve ser fornecido e uma senha temporária será criada em disco para uso no processo de envio. Retorna a saída do processo de envio. Se ocorrer um erro, uma string contendo a mensagem de erro será retornada.
+<p/>
 
 ## Instalação
 
