@@ -9,12 +9,12 @@ app = FastAPI()
 # Request return init
 @app.get("/")
 def root():
-    return{"request: True"} 
+    return{"request_success: True"} 
 
 
 # List files on directory send head param
 @app.get("/listfiles/")
-def get_list(path: str):
+def list_files(path: str):
     try:
         output = subprocess.check_output(
                 [
@@ -24,38 +24,38 @@ def get_list(path: str):
                     ]
                 ).decode("utf-8") 
         return output.splitlines()
-    except Exception as e:
-        return e
+    except Exception as error:
+        return str(error)
 
 
 # Compress  on format gz file 
 @app.post("/compress/")
-def compress_file(t,path: str):
+def compress_file(file_path: str):
     try:
-        with open(path,'rb') as list_files:
-            with gzip.open(path+'.gz','wb') as list_comprimido:
-                list_comprimido.write(list_files.read())
-        output=path+".gz"
-        return output
-    except Exception  as e:
-        return e
+        with open(file_path,'rb') as file:
+            with gzip.open(file_path+'.gz','wb') as compress_file:
+                compress_file.write(file.read())
+        compress_file_path = file_path+".gz"
+        return compress_file_path
+    except Exception  as error:
+        return str(error)
 
 
 # send files with destination being they remote or local
 @app.post("/send/")
-def send_file(pathin: str,pathout: str,use_password:bool,password:str = ""):
+def send_file(source_path: str,destination_path: str,use_password:bool,password:str = ""):
     try:
         if use_password:
-            with temp_password_file(mode=w, delete=False) as password_file:
+            with open('temp_password_file.txt', mode='w', delete=False) as password_file:
                 password_file.write(password)
-            output =subprocess.Popen(
+            output = subprocess.Popen(
                     [
                         "rsync",
                         "-avz",
                         "--password-file",
-                        password_file,
-                        pathin,
-                        pathout
+                        password_file.name,
+                        source_path,
+                        destination_path
                         ],
                     stdout=subprocess.PIPE
                     )
@@ -64,15 +64,15 @@ def send_file(pathin: str,pathout: str,use_password:bool,password:str = ""):
                 [
                     "rsync",
                     "-avz",
-                    pathin,
-                    pathout
+                    source_path,
+                    destination_path
                     ],
                 stdout=subprocess.PIPE
                 )
         return output.communicate()[0]
 
-    except Exception as e:
-        return str(e)
+    except Exception as error:
+        return str(error)
 
 
 
