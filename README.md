@@ -3,32 +3,32 @@
 This is a simple API built in Python with the FastAPI library for file compression using the gzip algorithm.
 Endpoints
 
-    GET "/listfiles/"
+GET "/listfiles/"
 
-    Parameters:
+Parameters:
 
-        path (str): the path to the directory to be listed.
+    path (str): the path to the directory to be listed.
 
-    Returns a list of file and directory names in the directory specified by path. If an error occurs, a string containing the error message will be returned.
+Returns a list of file and directory names in the directory specified by path. If an error occurs, a string containing the error message will be returned.
 
-    POST "/compress/"
+POST "/compress/"
 
-    Parameters:
+Parameters:
 
-        file_path (str): the full path to the file to be compressed.
+    file_path (str): the full path to the file to be compressed.
 
-    Compresses the file specified by file_path using the gzip format and returns the full path to the compressed file. If an error occurs, a string containing the error message will be returned.
+Compresses the file specified by file_path using the gzip format and returns the full path to the compressed file. If an error occurs, a string containing the error message will be returned.
 
-    POST "/send/"
+POST "/send/"
 
-    Parameters:
+Parameters:
 
-        source_path (str): the full path to the file or directory to be sent.
-        destination_path (str): the full path to the destination of the send.
-        use_password (bool): indicates whether a password should be used for authentication at the destination. If True, the password parameter must be provided.
-        password (str, optional): the password for authentication at the destination. Requires use_password=True.
+    source_path (str): the full path to the file or directory to be sent.
+    destination_path (str): the full path to the destination of the send.
+    use_password (bool): indicates whether a password should be used for authentication at the destination. If True, the password parameter must be provided.
+    password (str, optional): the password for authentication at the destination. Requires use_password=True.
 
-    Sends the file or directory specified by source_path to the destination specified by destination_path. If use_password is True, the password parameter must be provided, and a temporary password file will be created on disk for use in the send process. Returns the output of the send process. If an error occurs, a string containing the error message will be returned.
+Sends the file or directory specified by source_path to the destination specified by destination_path. If use_password is True, the password parameter must be provided, and a temporary password file will be created on disk for use in the send process. Returns the output of the send process. If an error occurs, a string containing the error message will be returned.
 
 # Installation
 
