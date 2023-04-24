@@ -16,7 +16,13 @@ def root():
 @app.get("/listfiles/")
 def get_list(path: str):
     try:
-        output = subprocess.check_output(["ls","-a",path]).decode("utf-8") 
+        output = subprocess.check_output(
+                [
+                    "ls",
+                    "-a",
+                    path
+                    ]
+                ).decode("utf-8") 
         return output.splitlines()
     except Exception as e:
         return e
@@ -36,9 +42,24 @@ def compress_file(t,path: str):
 
 
 @app.post("/send/")
-def send_file(pathin: str,pathout: str):
+def send_file(pathin: str,pathout: str,use_password:bool,password:str = ""):
     try:
-        output =subprocess.Popen(
+        if use_password:
+            with temp_password_file(mode=w, delete=False) as password_file:
+                password_file.write(password)
+            output =subprocess.Popen(
+                    [
+                        "rsync",
+                        "-avz",
+                        "--password-file",
+                        password_file,
+                        pathin,
+                        pathout
+                        ],
+                    stdout=subprocess.PIPE
+                    )
+        else:
+            output =subprocess.Popen(
                 [
                     "rsync",
                     "-avz",
@@ -48,8 +69,9 @@ def send_file(pathin: str,pathout: str):
                 stdout=subprocess.PIPE
                 )
         return output.communicate()[0]
+
     except Exception as e:
-        return e
+        return str(e)
 
 
 
