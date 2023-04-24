@@ -41,6 +41,7 @@ def compress_file(t,path: str):
         return e
 
 
+# send files with destination being they remote or local
 @app.post("/send/")
 def send_file(pathin: str,pathout: str,use_password:bool,password:str = ""):
     try:
