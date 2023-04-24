@@ -1,4 +1,4 @@
-# API de Compressão de Arquivos
+# API to Backup
 
 This is a simple API built in Python with the FastAPI library for file compression using the gzip algorithm.
 Endpoints
