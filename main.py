@@ -43,24 +43,26 @@ def compress_file(file_path: str):
 
 # send files with destination being they remote or local
 @app.post("/send/")
-def send_file(source_path: str,destination_path: str,use_password:bool,password:str = ""):
+def send_file(source_path: str,destination_path:str,use_password:bool,password:str = "", port:str = "22"):
     try:
         if use_password:
-            with open('temp_password_file.txt', mode='w', delete=False) as password_file:
-                password_file.write(password)
             output = subprocess.Popen(
                     [
+                        "sshpass",
+                        "-p",
+                        password,
                         "rsync",
-                        "-avz",
-                        "--password-file",
-                        password_file.name,
+                        "-vaurP",
+                        "-e",
+                        "ssh",
+                        "-p",
+                        port,
                         source_path,
-                        destination_path
-                        ],
+                        destination_path],
                     stdout=subprocess.PIPE
                     )
         else:
-            output =subprocess.Popen(
+            output = subprocess.Popen(
                 [
                     "rsync",
                     "-avz",
